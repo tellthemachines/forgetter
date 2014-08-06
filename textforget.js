@@ -105,7 +105,7 @@ function forgetit(){
   var parags = "";
   
   if(parlen >1){
-	for(y=0;y<parlen-1;y++){
+	for(y=0;y<parlen;y++){
 		parags += '<p>' + partext[y] + '.</p>'; 
 	}
   }
