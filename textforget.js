@@ -1,21 +1,31 @@
 function forgetit(){
   var input = document.getElementById("txt-input").value;
-  input = input.replace(/\r?\n|\r/g, " ");
+  input = input.replace(/\r?\n|\r/g, " "); //replace new lines with blank spaces
   var intext = input.split(" ");
   var len = intext.length;
   var thirdlen = len/3;
-  var numtimes = Math.ceil(Math.random()*thirdlen);
+  var numtimes = Math.ceil(Math.random()*thirdlen); //calculate a random number between 1 and a third of the words 
   var archive =[];
+  
   for(i=0;i<numtimes;i++){
-    var item = Math.ceil(Math.random()*len-1);
+    var item = Math.ceil(Math.random()*len-1); //get a random word from the text
 	var maybe = false;
 	var archlen = archive.length;
+	
+	//check if the word has already been forgotten
+	
 	while (archlen--) {
 		if (archive[archlen] == item) {
 			maybe = true;
 		}
 	}
+	
+	//if the word hasn't been forgotten, forget it
+	
 	if (maybe == false){
+	
+	//check for punctuation at start and end and save it
+	
 		var wordlen = intext[item].length;
 		var startbit = [];
 		var endbit = [];
@@ -34,7 +44,12 @@ function forgetit(){
 		}
 	}
 	
+	//choose between dropping and erasing
+	
 	var which = Math.ceil(Math.random()*2);
+	
+	//drop
+	
 	if(which%2 == 0){
 		var bitz ="";
 		if(startbit.length > 0){
@@ -45,6 +60,9 @@ function forgetit(){
 		}
 		intext[item] = bitz;
 	}
+	
+	//erase
+	
 	else{
 		var blankword = "";
 		if(startbit.length >0){
@@ -69,6 +87,9 @@ function forgetit(){
 	archive.push(item);
 	}
   }
+  
+  //rejoin text and remove spaces before end punctuation
+  
   outtext = intext.join(" ");
   outtext = outtext.replace(/\s\./,".");
   outtext = outtext.replace(/\s\?/,"?");
@@ -76,12 +97,22 @@ function forgetit(){
   outtext = outtext.replace(/\s:/,":");
   outtext = outtext.replace(/\s;/,";");
   outtext = outtext.replace(/\s!/,"!");
+  
+  //create newline after each period if periods exist
+  
   var partext = outtext.split(".");
   var parlen = partext.length;
   var parags = "";
-  for(y=0;y<parlen-1;y++){
-	parags += '<p>' + partext[y] + '.</p>'; 
+  
+  if(parlen >1){
+	for(y=0;y<parlen-1;y++){
+		parags += '<p>' + partext[y] + '.</p>'; 
+	}
   }
+  else{
+	parags += '<p>' + outtext + '</p>'; 
+  }
+  
   document.getElementById("text-display").innerHTML = parags;
   document.getElementById("printbut").style.display="block";  
 }
