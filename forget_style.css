@@ -1,34 +1,70 @@
 body{
 	margin:0;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 1em;
+    font-size: 100%;
     width:100%;
-	background: url("backdrop.jpg") top / cover no-repeat;
 }
 
-h1, h2, h3 {
-    font-weight: normal;
-    letter-spacing: 0.1em;
-	margin:5%;
+h1 {
+    margin:0.6em;
 	padding:0;
-	text-align:center;
+	font-size: 1.5em;
+	font-weight: normal;
+
+}
+
+a,
+a:visited {
+	color: green;
+	text-decoration: none;
+}
+
+a:hover,
+a:focus {
+	text-decoration: underline;
+}
+
+header  {
+	text-align: center;
+	letter-spacing: 0.1em;
+	margin-bottom: 3em;
+}
+
+header a {
+	display: inline-block;
+	margin: 0.3em;
+	font-size: 1.1em;
+}
+
+article {
+	width: 90%;
+	margin: 1em auto;
+	line-height: 1.4;
 }
 
 #txt-input{
 	display:block;
 	border:1px solid green;
-	width:70em;
-	height:18em;
+	width: 95%;
+	min-height:18em;
 	margin: 2em auto;
 }
 
-#butinput, #printbut{
+button{
 	display:block;
 	border:1px solid green;
 	margin: 2% auto;
+	padding: .3em .6em;
+	font-size: 1em;
 	color:green;
 	background:#fff;
-	
+
+}
+
+button:hover,
+button:focus {
+	color:#fff;
+	background:green;
 }
 
 #printbut{
@@ -39,19 +75,46 @@ h1, h2, h3 {
 	margin:1em 2em;
 }
 
+@media screen and (min-width: 50em) {
+	header {
+		margin-bottom: 5em;
+	}
+
+	header a {
+		margin: 0.5em;
+		font-size: 1.3em;
+	}
+
+	h1 {
+		margin: 1em;
+		font-size: 1.8em;
+	}
+
+	.front {
+		background: url(backdrop.jpg) top / cover no-repeat;
+	}
+
+	#txt-input {
+		width:60%;
+	}
+
+	article {
+	width: 60%;
+}
+
+}
 
 @media print {
-   h1, #enterstuff{
+   header, #enterstuff{
 	display:none;
    }
-   
+
    #printbut{
 	display:none !important;
    }
 
-   
+
    #text-display{
 	margin:2em;
    }
 }
-

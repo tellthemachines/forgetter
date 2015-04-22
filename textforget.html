@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width" />
 <link rel="stylesheet" href="forget_style.css"/>
-<script type="text/javascript" src="textforget.js"></script>
 <title>professional text forgetter</title>
 </head>
 
-<body>
-  <h1>To Help With Forgetting Necessary Bits Of Text</h1>
-  
-    <form name='getit' id="enterstuff">
-    <textarea id="txt-input" type="text" name="intext"></textarea>  
-  <input id ="butinput" type="button" value="forgetment" onClick="forgetit()"/> 
-    </form>
- 
+<body class="front">
+  <header>
+    <h1>To Help With Forgetting Necessary Bits Of Text</h1>
+    <a href="forgetterexplained.html">What is this?</a>
+    <a href="http://isabelbrison.com/about">Who made it?</a>
+  </header>
+  <form name='getit' id="enterstuff">
+    <textarea id="txt-input" type="text" name="intext"></textarea>
+    <button id ="butinput" type="button" onClick="forgetit()">forgetment</button>
+  </form>
+
   <div id='text-display'>
   </div>
- 
- <input type="button" id="printbut"
-  onClick="window.print()"
-  value="print this text"/>
 
+ <button type="button" id="printbut" onClick="window.print()">print this text</button>
+
+ <script type="text/javascript" src="textforget.js"></script>
 </body>
 </html>
