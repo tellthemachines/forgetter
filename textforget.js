@@ -5,8 +5,9 @@ function forgetit(){
 	return;
   }
 
-  input = input.replace(/\r?\n|\r/g, "&parag&"); //replace new lines with stand-in string so they don't get lost
+  input = input.replace(/\s*\r?\n\s*|\s*\r\s*/g, " &parag& "); //replace new lines with stand-in string so they don't get lost
   var intext = input.split(" ");
+  console.log(intext);
   var len = intext.length;
   var thirdlen = len/3;
   var numtimes = Math.ceil(Math.random()*thirdlen); //calculate a random number between 1 and a third of the words
@@ -15,15 +16,12 @@ function forgetit(){
   for(i=0;i<numtimes;i++){
     var item = Math.ceil(Math.random()*len-1); //get a random word from the text
 	var maybe = false;
-	var archlen = archive.length;
 
 	//check if the word has already been forgotten
 
-	while (archlen--) {
-		if (archive[archlen] == item) {
-			maybe = true;
-		}
-	}
+    if (archive.indexOf(item) !== -1) {
+        maybe = true;
+    }
 
 	// check if the word is a parag stand-in
 
@@ -35,25 +33,21 @@ function forgetit(){
 
 	if (maybe == false){
 
-	//check for punctuation at start and end and save it
+	//check for punctuation and save it
 
-		var wordlen = intext[item].length;
-		var startbit = [];
-		var endbit = [];
-		if (wordlen >= 2){
-			for(n=0;n<2;n++){
-			if(intext[item][n] == "ï¿½" || intext[item][n] == "\"" || intext[item][n] == "(" || intext[item][n] == "'" || intext[item][n] == "["){
-				startbit.push(intext[item][n]);
-			}
-		}
-	}
-	if(wordlen >=3){
-		for(m=wordlen-3;m<wordlen;m++){
-			if(intext[item][m] == "ï¿½" || intext[item][m] == "\"" || intext[item][m] == ")" || intext[item][m] == "(" || intext[item][m] == "'" || intext[item][m] == "." || intext[item][m] == "," || intext[item][m] == ";" || intext[item][m] == ":" || intext[item][m] == "?" || intext[item][m] == "!" || intext[item][m] == "]" || intext[item][m] == "["){
-				endbit.push(intext[item][m]);
-			}
-		}
-	}
+        var punctuation = ["\u201c","\u201d","\u2018","\u2019","\u0028","\u0029","\u005b","\u005d","\u002e","\u002c","\u003b","\u003a","\u003f","\u0021","\u2026"];
+        var charStorage = [];
+
+        var wordlen = intext[item].length;
+
+        for (n=0; n<wordlen; n++) {
+            if(punctuation.indexOf(intext[item][n]) !== -1) {
+                charStorage.push(intext[item][n]);
+            }
+            else {
+                charStorage.push("&nbsp;");
+            }
+        }
 
 	//choose between dropping and erasing
 
@@ -62,59 +56,38 @@ function forgetit(){
 	//drop
 
 	if(which%2 == 0){
-		var bitz ="";
-		if(startbit.length > 0){
-			bitz += startbit.join("");
-		}
-		if(endbit.length > 0){
-			bitz += endbit.join("");
-		}
-		intext[item] = bitz;
+        var dropped = charStorage.filter(function(char){
+            return char !== "&nbsp;";
+        });
+        intext[item] = dropped.join("");
 	}
 
 	//erase
 
 	else{
-		var blankword = "";
-		if(startbit.length >0){
-			blankword += startbit.join("");
-			}
-		else {
-			blankword += "&nbsp;";
-		}
-		for (j=0;j<wordlen;j++){
-			blankword += "&nbsp;";
-		}
-		if(endbit.length > 0){
-			blankword += endbit.join("");
-		}
-		else {
-			if(wordlen != 4){
-				blankword += "&nbsp;";
-			}
-		}
-		intext[item] = blankword;
+        intext[item] = charStorage.join("");
+        intext[item] += "&obliv&";
 	}
 	archive.push(item);
 	}
   }
 
-  //rejoin text and remove spaces before end punctuation
+  console.log(intext);
 
   outtext = intext.join(" ");
-  outtext = outtext.replace(/\s\./,".");
-  outtext = outtext.replace(/\s\?/,"?");
-  outtext = outtext.replace(/\s,/,",");
-  outtext = outtext.replace(/\s:/,":");
-  outtext = outtext.replace(/\s;/,";");
-  outtext = outtext.replace(/\s!/,"!");
+
+  // remove spaces before end punctuation unless spaces are erased word
+
+  outtext = outtext.replace(/\s+([\.\?,:;!…]+)(?!&obliv&)/g,"$1");
+
+  outtext = outtext.replace(/&obliv&/g, "");
 
   // sort out paragraphs
 
   outtext = outtext.replace(/&parag&/g, "</p><p>");
   var parags = "";
 
-	parags += '<p>' + outtext + '</p>';
+	parags += "<p>" + outtext + "</p>";
 
   // display! and make print button visible
 
