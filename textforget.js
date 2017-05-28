@@ -7,7 +7,6 @@ function forgetit(){
 
   input = input.replace(/\s*\r?\n\s*|\s*\r\s*/g, " &parag& "); //replace new lines with stand-in string so they don't get lost
   var intext = input.split(" ");
-  console.log(intext);
   var len = intext.length;
   var thirdlen = len/3;
   var numtimes = Math.ceil(Math.random()*thirdlen); //calculate a random number between 1 and a third of the words
@@ -72,13 +71,11 @@ function forgetit(){
 	}
   }
 
-  console.log(intext);
-
   outtext = intext.join(" ");
 
   // remove spaces before end punctuation unless spaces are erased word
 
-  outtext = outtext.replace(/\s+([\.\?,:;!…]+)(?!&obliv&)/g,"$1");
+  outtext = outtext.replace(/\s+([\.\?,:;!â€¦]+)(?!&obliv&)/g,"$1");
 
   outtext = outtext.replace(/&obliv&/g, "");
 
