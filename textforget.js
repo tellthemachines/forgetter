@@ -73,8 +73,6 @@ function forgetit(){
 
     outtext = intext.join(" ");
 
-    console.log(outtext);
-
     // remove spaces after beginning and before end punctuation unless spaces are erased word
 
     outtext = outtext.replace(/\s+([\u002e\u003f\u002c\u003a\u003b\u0021\u2026\u201d\u2019\u0029\u005d]+)(?!&obliv&)/g,"$1");
