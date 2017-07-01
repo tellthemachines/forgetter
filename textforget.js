@@ -7,6 +7,7 @@ function forgetit(){
 
     input = input.replace(/\s*\r?\n\s*|\s*\r\s*/g, " &parag& "); //replace new lines with stand-in string so they don't get lost
     var intext = input.split(" ");
+    // console.log(intext)
     var len = intext.length;
     var thirdlen = len/3;
     var numtimes = Math.ceil(Math.random()*thirdlen); //calculate a random number between 1 and a third of the words
@@ -38,9 +39,10 @@ function forgetit(){
             var charStorage = [];
 
             var wordlen = intext[item].length;
+            console.log(intext[item]);
 
             for (n=0; n<wordlen; n++) {
-                if(punctuation.indexOf(intext[item][n]) !== -1) {
+                if(punctuation.indexOf(intext[item][n]) !== -1 && ((intext[item][n] === "\u2019" && n === wordlen-1) || intext[item][n] !== "\u2019")) {
                     charStorage.push(intext[item][n]);
                 }
                 else {
